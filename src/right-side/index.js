@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { types } from '../constants';
 import { useDrop } from 'react-dnd';
-import Group from './item';
+import Group from './group';
 
 import { Container, Text } from './styles';
 
@@ -34,8 +34,6 @@ const RightSide = ({ items, onSetItems }) => {
 
     handleUpdateItems(item);
   };
-
-  //
 
   const [, drop] = useDrop({
     accept: [types.ITEM, types.GROUP],

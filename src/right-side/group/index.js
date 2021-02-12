@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDrop, useDrag } from 'react-dnd';
 import { items, types } from '../../constants';
 
-import { Group as GroupContainer, Item, Text } from './styles';
+import { Group as GroupContainer, Text } from './styles';
+
+import Item from './item';
 
 const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
   const [items, setItems] = useState(group.items);
@@ -21,6 +23,11 @@ const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
     setItems([ ...items, item ]);
     onSetItems(item);
   };
+
+  const handleRemoveItem = (item) => {
+    const newItems = items.filter(currentItem => currentItem.key !== item.key);
+    setItems(newItems);
+  }
 
   const [, drag] = useDrag({
     item: { type: types.GROUP, label: group.label, index, key: group.key },
@@ -46,15 +53,13 @@ const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
     onSetCanDropGroup(!isOver);
   }, [isOver]);
 
-  drag(drop(ref));
+  // drag(drop(ref));
 
   return (
-    <GroupContainer ref={ref} isOver={isOver} overHalf={overHalf}>
+    <GroupContainer ref={drop} isOver={isOver} overHalf={overHalf}>
       <Text>{group.label}</Text>
-      {items.map((item) => (
-        <Item key={item.key}>
-          {item.label}
-        </Item>
+      {items.map((item, index) => (
+        <Item key={item.key} item={item} index={index} onSetItems={handleRemoveItem} />
       ))}
     </GroupContainer>
   );

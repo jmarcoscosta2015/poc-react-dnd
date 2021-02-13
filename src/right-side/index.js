@@ -20,8 +20,6 @@ const RightSide = ({ items, onSetItems }) => {
   const handleDrop = (item, monitor) => {
     if (item.type !== 'Item') return;
 
-    alert('Group dropped');
-
     const { index } = monitor.getDropResult() || { index: groupList.length };
     const newGroup = {
       key: index,

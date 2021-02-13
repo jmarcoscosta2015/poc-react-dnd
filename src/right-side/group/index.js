@@ -15,8 +15,6 @@ const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
   const handleNewItem = (item, monitor) => {
     if (item.type !== 'Item') return;
 
-    alert('Item dropped');
-
     const { index } = monitor.getDropResult() || { index: items.length };
 
     setItemIndex(index);
@@ -29,12 +27,12 @@ const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
     setItems(newItems);
   }
 
-  // const [, drag] = useDrag({
-  //   item: { type: types.GROUP, label: group.label, index, key: group.key },
-  //   collect: (monitor) => ({
-  //     isDragging: monitor.isDragging(),
-  //   }),
-  // });
+  const [, drag] = useDrag({
+    item: { type: types.GROUP, label: group.label, index, key: group.key },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
   const [{ isOver }, drop] = useDrop({
     accept: [types.ITEM],
@@ -53,10 +51,10 @@ const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
     onSetCanDropGroup(!isOver);
   }, [isOver]);
 
-  // drag(drop(ref));
+  drag(drop(ref));
 
   return (
-    <GroupContainer ref={drop} isOver={isOver} overHalf={overHalf}>
+    <GroupContainer ref={ref} isOver={isOver} overHalf={overHalf}>
       <Text>{group.label}</Text>
       {items.map((item, index) => (
         <Item key={item.key} item={item} index={index} onSetItems={handleRemoveItem} />

@@ -11,8 +11,6 @@ const LeftSide = ({ items, onSetItems }) => {
   const handleDrop = (item, monitor) => {
     if (item.type !== 'Item') return;
 
-    alert('Item dropped in left side');
-
     const { index: newIndex } = monitor.getDropResult() || { index: items.length };
 
     setIndex(newIndex);

@@ -29,12 +29,12 @@ const Group = ({ group, index, overHalf, onSetItems, onSetCanDropGroup }) => {
     setItems(newItems);
   }
 
-  const [, drag] = useDrag({
-    item: { type: types.GROUP, label: group.label, index, key: group.key },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+  // const [, drag] = useDrag({
+  //   item: { type: types.GROUP, label: group.label, index, key: group.key },
+  //   collect: (monitor) => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  // });
 
   const [{ isOver }, drop] = useDrop({
     accept: [types.ITEM],

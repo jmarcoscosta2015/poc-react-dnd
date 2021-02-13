@@ -14,7 +14,7 @@ const App = () => {
   return (
     <Container>
       <DndProvider backend={HTML5Backend}>
-        <LeftSide items={itemsList} />
+        <LeftSide items={itemsList} onSetItems={setItemsList} />
         <RightSide items={itemsList} onSetItems={setItemsList} />
       </DndProvider>
     </Container>

@@ -8,7 +8,6 @@ import { Container, Text } from './styles';
 
 const RightSide = ({ items, onSetItems }) => {
   const [groupList, setGroupList] = useState([]);
-  const [groupIndex, setGroupIndex] = useState(0);
   const [overHalf, setOverHalf] = useState(false);
   const [canDropGroup, setCanDropGroup] = useState(true);
 
@@ -25,20 +24,22 @@ const RightSide = ({ items, onSetItems }) => {
       key: index,
       label: `Group ${index + 1}`,
       items: [item],
+      type: 'Group',
     };
 
-    setGroupIndex(index);
     setGroupList([ ...groupList, newGroup ]);
 
     handleUpdateItems(item);
+
+    return index;
   };
 
   const [, drop] = useDrop({
     accept: [types.ITEM, types.GROUP],
     drop: (item, monitor) => {
-      handleDrop(item, monitor);
+      const index = handleDrop(item, monitor);
 
-      return { index: groupIndex };
+      return { index };
     },
     canDrop: () => canDropGroup,
     collect: (monitor) => ({

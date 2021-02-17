@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useState } from 'react';
 import Item from './item';
 import { useDrop } from 'react-dnd';
@@ -7,9 +8,15 @@ import { Container } from './styles';
 
 const LeftSide = ({ items, onSetItems }) => {
   const [index, setIndex] = useState(0);
+  
+  const checkItem = (item) => {
+    const findItem = _.find(items, (currentItem) => currentItem.key === item.key);
+
+    return !_.isEmpty(findItem);
+  };
 
   const handleDrop = (item, monitor) => {
-    if (item.type !== 'Item') return;
+    if (item.type !== 'Item' || checkItem(item)) return;
 
     const { index: newIndex } = monitor.getDropResult() || { index: items.length };
 
